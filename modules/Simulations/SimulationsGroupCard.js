@@ -1,16 +1,7 @@
 import React, {useMemo, useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {
-    Button,
-    HStack,
-    FlatList,
-    Flex,
-    ScrollView,
-    Divider,
-    Spacer,
-} from 'native-base';
+import {Button, FlatList, Flex, ScrollView, Divider, Spacer} from 'native-base';
 import tailwind from 'tailwind-rn';
-import globalStyles from '../../styles';
 import moment from 'moment';
 import {SOLUTION_STATUS_CONFIGS} from './Constants';
 import {useNavigate} from 'react-router-native';
@@ -49,9 +40,16 @@ export default function ({simulations}) {
             ].icon,
         [displayedSimulation],
     );
+    const configuration = useMemo(() => {
+        const cores =
+            displayedSimulation && displayedSimulation.requestedCpuCores;
+        const memory =
+            displayedSimulation && displayedSimulation.minimumMemoryInGb;
+        return `${cores} Core - ${memory} GB`;
+    }, [displayedSimulation]);
     return (
         <ScrollView style={[tailwind('bg-white mb-3 p-2'), styles.card]}>
-            <HStack>
+            <Flex direction="row">
                 <StatusIcon width={18} height={18} />
                 <View style={tailwind('ml-2')}>
                     <Text>
@@ -66,7 +64,31 @@ export default function ({simulations}) {
                         )}
                     </Text>
                 </View>
-            </HStack>
+            </Flex>
+            <Divider style={tailwind('my-2')} />
+            <View style={tailwind('p-2')}>
+                <Flex style={tailwind('mb-1')}>
+                    <Flex direction="row">
+                        <Text style={tailwind('w-1/3')}>Triggered By:</Text>
+                        <Text>
+                            {displayedSimulation &&
+                                displayedSimulation.createdByUser.name}
+                        </Text>
+                    </Flex>
+                    <Flex direction="row">
+                        <Text style={tailwind('w-1/3')}>Configuration:</Text>
+                        <Text>{configuration}</Text>
+                    </Flex>
+                    <Flex direction="row">
+                        <Text style={tailwind('w-1/3')}>Engine:</Text>
+                        <Text>
+                            {displayedSimulation &&
+                                displayedSimulation.simulationEngine.name}
+                        </Text>
+                    </Flex>
+                </Flex>
+            </View>
+            <Divider style={tailwind('my-2')} />
             <Flex direction="row">
                 <Button
                     size="sm"

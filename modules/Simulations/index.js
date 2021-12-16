@@ -1,11 +1,12 @@
 import React, {useMemo} from 'react';
-import {Text, View} from 'react-native';
+import {View} from 'react-native';
 import {useSimulations} from './Queries';
 import tailwind from 'tailwind-rn';
 import globalStyles from '../../styles';
 import {groupBy} from 'lodash';
 import SimulationsGroupCard from './SimulationsGroupCard';
-import {Flex} from 'native-base';
+import {Flex, Spacer, Text} from 'native-base';
+import PlexosCloudLogo from '../../icons/PlexosCloudLogo';
 
 export default function () {
     const simulationsQueryResult = useSimulations(
@@ -24,12 +25,21 @@ export default function () {
     );
     return (
         <View>
-            <Flex direction="row" style={[tailwind('px-3 py-4 bg-white')]}>
-                <View>
-                    <Text>PLEXOS Cloud</Text>
-                </View>
-                <View style={[tailwind('ml-2'), globalStyles.textAccent]}>
-                    <Text style={globalStyles.textAccent}>Chile Data set</Text>
+            <Flex
+                direction="row"
+                alignItems="center"
+                style={[tailwind('px-3 py-4 bg-white')]}>
+                <PlexosCloudLogo width={80} height={48} />
+                <Spacer />
+                <View
+                    style={[
+                        tailwind('px-1'),
+                        globalStyles.borderLight,
+                        globalStyles.textAccent,
+                    ]}>
+                    <Text fontSize="xl" style={globalStyles.textAccent}>
+                        Chile Data set
+                    </Text>
                 </View>
             </Flex>
             <View style={tailwind('p-3')}>
