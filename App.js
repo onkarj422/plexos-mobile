@@ -6,6 +6,7 @@ import {NativeRouter, Route, Routes} from 'react-router-native';
 import Simulations from './modules/Simulations';
 import Models from './modules/Models';
 import Output from './modules/Output';
+import Studies from './modules/Studies';
 
 const queryClient = new QueryClient();
 
@@ -37,6 +38,7 @@ const App = () => {
                             <Route exact path="/" element={<Simulations />} />
                             <Route path="/models" element={<Models />} />
                             <Route path="/output" element={<Output />} />
+                            <Route path="/studies" element={<Studies />} />
                         </Routes>
                     </QueryClientProvider>
                 </View>

@@ -7,6 +7,7 @@ import {groupBy} from 'lodash';
 import SimulationsGroupCard from './SimulationsGroupCard';
 import {Flex, Spacer, Text} from 'native-base';
 import PlexosCloudLogo from '../../icons/PlexosCloudLogo';
+import {Link} from 'react-router-native';
 
 export default function () {
     const simulationsQueryResult = useSimulations(
@@ -37,9 +38,11 @@ export default function () {
                         globalStyles.borderLight,
                         globalStyles.textAccent,
                     ]}>
-                    <Text fontSize="xl" style={globalStyles.textAccent}>
-                        Chile Data set
-                    </Text>
+                    <Link to="/studies" underlayColor="#f0f4f7">
+                        <Text style={globalStyles.textAccent}>
+                            Chile Data set
+                        </Text>
+                    </Link>
                 </View>
             </Flex>
             <View style={tailwind('p-3')}>
