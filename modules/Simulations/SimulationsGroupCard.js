@@ -6,7 +6,7 @@ import {
     TouchableWithoutFeedback,
     View,
 } from 'react-native';
-import {Button, HStack, Stack} from 'native-base';
+import {Button, HStack} from 'native-base';
 import tailwind from 'tailwind-rn';
 import globalStyles from '../../styles';
 import moment from 'moment';
@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
         elevation: 3,
         borderRadius: 4,
         borderColor: '#4aa7a9',
+        borderWidth: 1,
     },
 });
 

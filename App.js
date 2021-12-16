@@ -1,31 +1,42 @@
-import {NativeBaseProvider} from 'native-base';
+import {NativeBaseProvider, extendTheme} from 'native-base';
 import React from 'react';
-import {useColorScheme, View} from 'react-native';
+import {View} from 'react-native';
 import {QueryClient, QueryClientProvider} from 'react-query';
 import {NativeRouter, Route, Routes} from 'react-router-native';
 import Simulations from './modules/Simulations';
 import Models from './modules/Models';
-import Datasets from './modules/Datasets';
-import Home from './modules/Home';
+import Output from './modules/Output';
 
 const queryClient = new QueryClient();
 
 import('./reactotron').then(() => console.log('Reactotron Configured'));
 
+const theme = extendTheme({
+    colors: {
+        primary: {
+            50: '#edf7f7',
+            100: '#cae7e8',
+            200: '#a6d7d8',
+            400: '#83c7c9',
+            500: '#5fb7b9',
+            600: '#469ea0',
+            700: '#367b7c',
+            800: '#275859',
+            900: '#173535',
+        },
+    },
+});
+
 const App = () => {
     return (
-        <NativeBaseProvider>
+        <NativeBaseProvider theme={theme}>
             <NativeRouter>
                 <View>
                     <QueryClientProvider client={queryClient}>
                         <Routes>
-                            <Route exact path="/" element={<Home />} />
-                            <Route
-                                path="/simulations"
-                                element={<Simulations />}
-                            />
+                            <Route exact path="/" element={<Simulations />} />
                             <Route path="/models" element={<Models />} />
-                            <Route path="/datasets" element={<Datasets />} />
+                            <Route path="/output" element={<Output />} />
                         </Routes>
                     </QueryClientProvider>
                 </View>

@@ -1,10 +1,11 @@
-import React, {useEffect, useMemo} from 'react';
+import React, {useMemo} from 'react';
 import {Text, View} from 'react-native';
 import {useSimulations} from './Queries';
 import tailwind from 'tailwind-rn';
 import globalStyles from '../../styles';
 import {groupBy} from 'lodash';
 import SimulationsGroupCard from './SimulationsGroupCard';
+import {Flex} from 'native-base';
 
 export default function () {
     const simulationsQueryResult = useSimulations(
@@ -21,21 +22,16 @@ export default function () {
             simulation => simulation.models && simulation.models[0],
         ),
     );
-    // useEffect(() => {
-    //     setSelectedSimulation(simulations[0]);
-    // }, [simulations, setSelectedSimulation]);
-
-    // const onClickSimulation = useCallback(
-    //     simulation => {
-    //         setSelectedSimulation(simulation);
-    //     },
-    //     [setSelectedSimulation],
-    // );
     return (
         <View>
-            <View style={[tailwind('px-3 py-4'), globalStyles.bgAccent]}>
-                <Text>Plexos Mobile</Text>
-            </View>
+            <Flex direction="row" style={[tailwind('px-3 py-4 bg-white')]}>
+                <View>
+                    <Text>PLEXOS Cloud</Text>
+                </View>
+                <View style={[tailwind('ml-2'), globalStyles.textAccent]}>
+                    <Text style={globalStyles.textAccent}>Chile Data set</Text>
+                </View>
+            </Flex>
             <View style={tailwind('p-3')}>
                 {grouped &&
                     grouped.map((_simulations, index) => (

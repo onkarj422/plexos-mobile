@@ -5,4 +5,7 @@ export default StyleSheet.create({
         backgroundColor: '#4aa7a9',
         color: '#ffffff',
     },
+    textAccent: {
+        color: '#4aa7a9',
+    },
 });
