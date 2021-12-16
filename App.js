@@ -1,3 +1,4 @@
+import {NativeBaseProvider} from 'native-base';
 import React from 'react';
 import {
     SafeAreaView,
@@ -16,18 +17,20 @@ import('./reactotron').then(() => console.log('Reactotron Configured'));
 const App = () => {
     const isDarkMode = useColorScheme() === 'dark';
     return (
-        <QueryClientProvider client={queryClient}>
-            <SafeAreaView>
-                <StatusBar
-                    barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-                />
-                <ScrollView contentInsetAdjustmentBehavior="automatic">
-                    <View>
-                        <Simulations />
-                    </View>
-                </ScrollView>
-            </SafeAreaView>
-        </QueryClientProvider>
+        <NativeBaseProvider>
+            <QueryClientProvider client={queryClient}>
+                <SafeAreaView>
+                    <StatusBar
+                        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+                    />
+                    <ScrollView contentInsetAdjustmentBehavior="automatic">
+                        <View>
+                            <Simulations />
+                        </View>
+                    </ScrollView>
+                </SafeAreaView>
+            </QueryClientProvider>
+        </NativeBaseProvider>
     );
 };
 
