@@ -1,3 +1,7 @@
+import React from 'react';
+import {SvgCss} from 'react-native-svg';
+
+const xml = `
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
     <defs>
         <style>.cls-1{fill:#fff;opacity:0;}.cls-2{fill:#4aa7a9;stroke-width:0.1px;}.cls-2,.cls-3{stroke:#4aa7a9;stroke-miterlimit:10;}.cls-3{fill:none;stroke-linecap:round;}</style>
@@ -15,3 +19,6 @@
         </g>
     </g>
 </svg>
+`;
+
+export default props => <SvgCss xml={xml} {...props} />;

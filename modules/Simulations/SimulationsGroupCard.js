@@ -1,15 +1,19 @@
 import React, {useMemo, useState} from 'react';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {
+    Button,
+    HStack,
     FlatList,
-    StyleSheet,
-    Text,
-    TouchableWithoutFeedback,
-    View,
-} from 'react-native';
-import {Button, HStack} from 'native-base';
+    Flex,
+    ScrollView,
+    Divider,
+    Spacer,
+} from 'native-base';
 import tailwind from 'tailwind-rn';
 import globalStyles from '../../styles';
 import moment from 'moment';
+import {SOLUTION_STATUS_CONFIGS} from './Constants';
+import {useNavigate} from 'react-router-native';
 
 const styles = StyleSheet.create({
     card: {
@@ -22,6 +26,7 @@ const styles = StyleSheet.create({
 
 export default function ({simulations}) {
     const [showMore, setShowMore] = useState(false);
+    const navigate = useNavigate();
     const [selectedSimulation, setSelectedSimulation] = useState(null);
     const displayedSimulation = useMemo(
         () =>
@@ -37,21 +42,32 @@ export default function ({simulations}) {
             ),
         [displayedSimulation, simulations],
     );
+    const StatusIcon = useMemo(
+        () =>
+            SOLUTION_STATUS_CONFIGS[
+                displayedSimulation && displayedSimulation.status.toLowerCase()
+            ].icon,
+        [displayedSimulation],
+    );
     return (
-        <View style={[tailwind('bg-white mb-3 p-2'), styles.card]}>
+        <ScrollView style={[tailwind('bg-white mb-3 p-2'), styles.card]}>
             <HStack>
-                <View>
-                    <Text>
-                        {displayedSimulation && displayedSimulation.status}
-                    </Text>
-                </View>
-                <View>
+                <StatusIcon width={18} height={18} />
+                <View style={tailwind('ml-2')}>
                     <Text>
                         {displayedSimulation && displayedSimulation.models[0]}
                     </Text>
                 </View>
+                <Spacer />
+                <View>
+                    <Text>
+                        {moment(displayedSimulation.createdAt).format(
+                            'DD MMM YY, HH:MM',
+                        )}
+                    </Text>
+                </View>
             </HStack>
-            <HStack>
+            <Flex direction="row">
                 <Button
                     size="sm"
                     variant="ghost"
@@ -60,28 +76,46 @@ export default function ({simulations}) {
                     }}>
                     SHOW MORE SOLUTIONNS
                 </Button>
-            </HStack>
+                <Spacer />
+                <Button
+                    size="sm"
+                    onPress={() => {
+                        navigate('/output', {replace: true});
+                    }}>
+                    OUTPUT
+                </Button>
+            </Flex>
             {showMore && (
                 <View>
                     <FlatList
                         data={hiddenSimulations}
-                        renderItem={({item}) => (
-                            <TouchableWithoutFeedback
-                                onPress={() => {
-                                    setSelectedSimulation(item);
-                                }}>
-                                <View style={tailwind('px-2 py-4')}>
-                                    <Text>
-                                        {moment(item.createdAt).format(
-                                            'DD MMM YY, HH:MM',
-                                        )}
-                                    </Text>
-                                </View>
-                            </TouchableWithoutFeedback>
-                        )}
+                        renderItem={({item}) => {
+                            const Status =
+                                SOLUTION_STATUS_CONFIGS[
+                                    item && item.status.toLowerCase()
+                                ].icon;
+                            return (
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        setSelectedSimulation(item);
+                                    }}>
+                                    <Flex
+                                        direction="row"
+                                        style={tailwind('px-2 py-3')}>
+                                        <Status width={16} height={16} />
+                                        <Text style={tailwind('ml-2')}>
+                                            {moment(item.createdAt).format(
+                                                'DD MMM YY, HH:MM',
+                                            )}
+                                        </Text>
+                                    </Flex>
+                                    <Divider />
+                                </TouchableOpacity>
+                            );
+                        }}
                     />
                 </View>
             )}
-        </View>
+        </ScrollView>
     );
 }
