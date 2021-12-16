@@ -1,15 +1,11 @@
 import React from 'react';
-import {
-    SafeAreaView,
-    ScrollView,
-    StatusBar,
-    useColorScheme,
-    View,
-    Text,
-} from 'react-native';
+import {useColorScheme, View} from 'react-native';
 import {QueryClient, QueryClientProvider} from 'react-query';
-import {NativeRouter, Link} from 'react-router-native';
-import {AppRoutes} from './routes';
+import {NativeRouter, Route, Routes} from 'react-router-native';
+import Simulations from './modules/Simulations';
+import Models from './modules/Models';
+import Datasets from './modules/Datasets';
+import Home from './modules/Home';
 
 const queryClient = new QueryClient();
 
@@ -21,24 +17,12 @@ const App = () => {
         <NativeRouter>
             <View>
                 <QueryClientProvider client={queryClient}>
-                    <SafeAreaView>
-                        <StatusBar
-                            barStyle={
-                                isDarkMode ? 'light-content' : 'dark-content'
-                            }
-                        />
-                        <ScrollView contentInsetAdjustmentBehavior="automatic">
-                            <View>
-                                <Link to="/simulations" underlayColor="#f0f4f7">
-                                    <Text> Simulations</Text>
-                                </Link>
-                                <Link to="/models" underlayColor="#f0f4f7">
-                                    <Text> Models</Text>
-                                </Link>
-                            </View>
-                        </ScrollView>
-                    </SafeAreaView>
-                    <AppRoutes />
+                    <Routes>
+                        <Route exact path="/" element={<Home />} />
+                        <Route path="/simulations" element={<Simulations />} />
+                        <Route path="/models" element={<Models />} />
+                        <Route path="/datasets" element={<Datasets />} />
+                    </Routes>
                 </QueryClientProvider>
             </View>
         </NativeRouter>
